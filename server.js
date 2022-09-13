@@ -12,6 +12,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 /**
+ * Routes
+ */
+
+app.get("/", (req, res) =>{
+     res.status(200).json({status: true, message: 'All works!!'})
+})
+
+/**
  * Start listeninig
  */
 
