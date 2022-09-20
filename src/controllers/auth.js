@@ -3,7 +3,7 @@ const response = require("../helpers/response");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-const privateKey = fs.readFileSync("private.pem");
+//const privateKey = fs.readFileSync("private.pem");
 
 exports.sigup = async (req) => {
   const salt = await bcrypt.genSalt(10);

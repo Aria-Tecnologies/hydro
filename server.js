@@ -1,19 +1,18 @@
 const express = require("express");
 const morgan = require('morgan')
-
+const { conn } = require('./src/database/database.js')
 const cropRoutes = require('./src/routes/crop')
 const authRoutes = require('./src/routes/auth')
 
-const db = require('./src/database/database')
-
 var bodyParser = require('body-parser');
+const { connect } = require("./src/routes/crop");
 
 
 const PORT = process.env.PORT || "3000";
 
 const app = express();
 
-db.test();
+//db.test();
 /**
  * Middleware
  */
@@ -36,6 +35,8 @@ app.get("/", (req, res) =>{
  * Start listeninig
  */
 
-app.listen(PORT, () =>{
-     console.log(`Server liestening on port ${PORT}`)
+ conn.sync({ force: true }).then(async () => {
+     app.listen(PORT, () =>{
+          console.log(`Server liestening on port ${PORT}`)
+     })
 })

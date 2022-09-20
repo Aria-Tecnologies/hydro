@@ -1,21 +1,34 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const CropModel = require('../models/crop')
-const RoleModel = require('../models/role')
-
-const sequelize = new Sequelize('sqlite::memory:');
-const UserModel = sequelize.define('User', {
-  username: DataTypes.STRING,
-  email: DataTypes.STRING,
-  password: DataTypes.STRING
-});
-
-const init = async () =>{
-  UserModel.belongsToMany(CropModel, { through: 'UserCrops'})
-  UserModel.belongsToMany(RoleModel, { through: 'UserRoles' })
-  await UserModel.sync();
-  return UserModel
-}
-
-init()
-
-module.exports = UserModel
+const { DataTypes } = require('sequelize');
+module.exports = (sequelize) => {
+  sequelize.define('User', {
+    id:{
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true, 
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true, 
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true, 
+      }
+    }
+  }, {timeStamps: false,
+    createdAt: false,
+    updatedAt: false});
+};

@@ -1,15 +1,21 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize('sqlite::memory:');
-const RoleModel = sequelize.define('Role', {
-  name: DataTypes.STRING,
-});
-
-const init = async () =>{
-  await RoleModel.sync();
-  return RoleModel
-}
-
-init()
-
-module.exports = RoleModel
+module.exports = (sequelize) => {
+  sequelize.define('Role', {
+    id:{
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true, 
+      }
+    }
+  }, {timeStamps: false,
+    createdAt: false,
+    updatedAt: false});
+};
