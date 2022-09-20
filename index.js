@@ -35,7 +35,7 @@ app.get("/", (req, res) =>{
  * Start listeninig
  */
 
- conn.sync({ force: true }).then(async () => {
+ conn.sync({ force: false }).then(async () => {
      app.listen(PORT, () =>{
           console.log(`Server liestening on port ${PORT}`)
      })
