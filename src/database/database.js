@@ -19,10 +19,7 @@ const sequelize = new Sequelize(`mariadb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/
 modelUser(sequelize);
 modelCrop(sequelize);
 modelRole(sequelize);
-/**
- *   UserModel.belongsToMany(CropModel, { through: 'UserCrops'})
-  UserModel.belongsToMany(RoleModel, { through: 'UserRoles' })
- */
+
 const {  User, Crop, Role } = sequelize.models;
 User.hasMany(Crop);
 Crop.belongsTo(User);
