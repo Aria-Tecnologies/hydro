@@ -44,15 +44,15 @@ Crop.belongsTo(User);
 
 User.hasMany(Role);
 Role.belongsTo(User);
-exports.test = async() => {
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
 
-}
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 module.exports = {
   ...sequelize.models, 
