@@ -1,6 +1,6 @@
 
 require('dotenv').config();
-
+const fs = require("fs");
 const Sequelize = require("sequelize");
 const modelUser = require("../models/user.js")
 const modelCrop = require("../models/crop.js")
@@ -10,11 +10,21 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-const sequelize = new Sequelize(`mariadb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pokemons`, {
-  logging: false,
-  native: false,
-  dialect: "mariadb",
-});
+const cert = [fs.readFileSync("aws_skysql_chain.pem", "utf8")]
+
+const sequelize = new Sequelize(
+  process.env.DATABASE_URL,
+  {
+    logging: false,
+    dialect: "mariadb",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+  }
+)
 
 modelUser(sequelize);
 modelCrop(sequelize);
