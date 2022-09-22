@@ -18,15 +18,15 @@ const sequelize = new Sequelize(
     logging: console.log,
     dialect: "mariadb",
     maxConcurrentQueries: 100,
-    dialectOptions: {
+    /**dialectOptions: {
       ssl: {
         require: true,
         rejectUnauthorized: false
       }
-    },
-    /**dialectOptions: {
+    },*/
+    dialectOptions: {
         ssl:'Amazon RDS'
-    },**/
+    },
     pool: { maxConnections: 5, maxIdleTime: 30},
   }
 )
