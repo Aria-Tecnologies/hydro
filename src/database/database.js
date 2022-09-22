@@ -15,8 +15,8 @@ const cert = [fs.readFileSync("aws_skysql_chain.pem", "utf8")]
 const sequelize = new Sequelize(
   process.env.DATABASE_URL,
   {
-    //dialect: "mariadb",
-    logging: false,
+    dialect: "mariadb",
+    //logging: false,
     // native: false
     dialectOptions: {
       ssl: {
