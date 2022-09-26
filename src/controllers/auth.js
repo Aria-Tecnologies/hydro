@@ -3,7 +3,7 @@ const UserModel = db.User;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-const privateKey = fs.readFileSync("private.pem");
+//const privateKey = fs.readFileSync("private.pem");
 
 exports.sigup = async (req, res) => {
   const { username, email, password, role } = req.body;
