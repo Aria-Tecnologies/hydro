@@ -3,14 +3,8 @@ const authController = require("../controllers/auth");
 
 const router = express.Router();
 
-router.post("/signup", async (req, res) => {
-    const result = await authController.sigup(req);
-    res.status(result.status).json({message: result.message, data: result.data})
-});
+router.post("/signup", authController.sigup);
 
-router.post("/signin", async (req, res) => {
-    const result = await authController.singin(req);
-    res.status(result.status).json({message: result.message, data: result.data})
-});
+router.post("/signin", authController.singin);
 
 module.exports = router;

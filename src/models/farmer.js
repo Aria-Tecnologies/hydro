@@ -1,40 +1,33 @@
 const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
-  sequelize.define('User', {
+  sequelize.define('Farmer', {
     id:{
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true,
     },
-    username: {
+    nickname: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: true, 
       }
     },
-    email: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: true, 
       }
     },
-    password: {
+    location: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: true, 
       }
-    }/*,
-    role: {
-      type: DataTypes.STRING,
-      references: {
-         model: 'Role', 
-         key: 'name', 
-      }
-   }*/
+    }
   }, {timeStamps: false,
     createdAt: false,
     updatedAt: false});

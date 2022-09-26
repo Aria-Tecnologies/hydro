@@ -1,7 +1,7 @@
-const CropModel = require("../models/crop");
-const response = require("../helpers/response");
+const db = require('../database/database')
+const CropModel = db.Crop
 
-exports.add = async (req) => {
+exports.add = async (req, res) => {
   const newCrop = await CropModel.create({
     name: req.body.name,
     description: req.body.description,
@@ -10,19 +10,19 @@ exports.add = async (req) => {
   await newCrop.save()
 
   return (newCrop)
-    ? response(200, "A new crop has been added successfuly", newCrop)
-    : response(204, "An error has benn ocurred");
+    ? res.status(200).json({ message: "A new crop has been added successfuly", data: newCrop})
+    : res.status(400).json({message: "An error has benn ocurred"});
 };
 
-exports.list = async () => {
+exports.list = async (req, res) => {
   const cropList = await CropModel.findAll()
 
   return (cropList.length > 0)
-    ? response(200, "Successfuly", cropList)
-    : response(204, "No items available on DB");
+    ? res.status(200).json({ message: "Successfuly", data: cropList })
+    : res.status(400).json({ message: "No items available on DB" });
 };
 
-exports.find = async (req) => {
+exports.find = async (req, res) => {
   const cropById = await CropModel.findAll({
     where: {
       id: req.params.id,
@@ -30,11 +30,11 @@ exports.find = async (req) => {
   });
 
   return (cropById.length > 0)
-  ? response(200, 'Successfully', cropById)
-  : response(204, 'Crop doesn´t match on DB')
+  ? res.status(200).json({ message: 'Successfully', data: cropById})
+  : res.status(400).json({ message: 'Crop doesn´t match on DB' })
 };
 
-exports.update = async (req) => {
+exports.update = async (req, res) => {
     const cropById = await CropModel.update({ name: req.body.name, description: req.body.description, status: req.body.status },{
             where: {
                 id: req.params.id
@@ -42,7 +42,7 @@ exports.update = async (req) => {
         });
   
     return(cropById.length > 0)
-    ? response(200, 'Successfully', cropById)
-    : response(204, 'Crop doesn´t match on DB')
+    ? res.status(200).json({ message: 'Successfully', data: cropById })
+    : res.status(400).json({ message: 'Crop doesn´t match on DB' })
   };
   
