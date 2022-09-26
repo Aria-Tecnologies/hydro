@@ -1,5 +1,5 @@
-const CropModel = require("../models/crop");
-const response = require("../helpers/response");
+const db = require('../database/database')
+const CropModel = db.Crop
 
 exports.add = async (req, res) => {
   const newCrop = await CropModel.create({

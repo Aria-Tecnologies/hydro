@@ -1,12 +1,18 @@
 const { DataTypes } = require('sequelize');
-
 module.exports = (sequelize) => {
-  sequelize.define('Crop', {
+  sequelize.define('Farmer', {
     id:{
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true,
+    },
+    nickname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true, 
+      }
     },
     name: {
       type: DataTypes.STRING,
@@ -15,14 +21,7 @@ module.exports = (sequelize) => {
         notNull: true, 
       }
     },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: true, 
-      }
-    },
-    status: {
+    location: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {

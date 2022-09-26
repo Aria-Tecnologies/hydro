@@ -1,12 +1,12 @@
-const UserModel = require("../models/user");
-const response = require("../helpers/response");
+const db = require('../database/database');
+const UserModel = db.User;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const privateKey = fs.readFileSync("private.pem");
 
 exports.sigup = async (req, res) => {
-  const { username, email, password, roles } = req.body;
+  const { username, email, password, role } = req.body;
 
   const salt = await bcrypt.genSalt(10);
 
@@ -22,6 +22,7 @@ exports.sigup = async (req, res) => {
     username,
     email,
     password: await bcrypt.hash(password, salt),
+    role : role ? role : 'Guest'
   });
 
   await newUser.save();
@@ -43,7 +44,6 @@ exports.singin = async (req, res) => {
       email
     },
   });
-  console.log(user.length, '********************')
   if ( user.length > 0 && await bcrypt.compare(password, user[0].dataValues.password) ) {
     const token = jwt.sign({ id: user[0].dataValues.id }, privateKey, {
       expiresIn: 86400, // 24hrs

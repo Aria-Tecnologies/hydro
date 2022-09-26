@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
-const UserModel = require('../models/user')
+const db = require('../database/database')
+const UserModel = db.User
 
 const verifyToken = async (req, res, next) => {
 
@@ -24,6 +25,7 @@ const verifyToken = async (req, res, next) => {
         next()
 
     } catch (error) {
+        console.log(error)
         return res.status(401).json({ message: 'unauthorized' })
     }
 };
