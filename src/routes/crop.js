@@ -2,18 +2,18 @@ const express = require('express');
 
 const router = express.Router();
 const cropController = require('../controllers/crop');
-const verifyToken = require('../middlewares')
+const { verifyToken, isAdmin, isGuest } = require('../middlewares')
 
 
-router.get('/', verifyToken, cropController.list);
+router.get('/', [ verifyToken, isGuest ], cropController.list);
 
-router.get('/:id', verifyToken, cropController.find)
+router.get('/:id', [ verifyToken, isGuest ], cropController.find)
 
-router.post('/', verifyToken, cropController.add)
+router.post('/', [ verifyToken, isGuest ], cropController.add)
 
-router.put('/:id', verifyToken, cropController.update)
+router.put('/:id', [ verifyToken, isAdmin ], cropController.update)
 
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', [ verifyToken, isAdmin ], async(req, res) => {
     //TO_DO
 })
 

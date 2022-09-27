@@ -2,18 +2,18 @@ const express = require('express');
 
 const router = express.Router();
 const farmerController = require('../controllers/farmer');
-const verifyToken = require('../middlewares');
+const { verifyToken, isAdmin, isGuest } = require('../middlewares');
 
 
-router.get('/', verifyToken, farmerController.list);
+router.get('/', [ verifyToken, isGuest ], farmerController.list);
 
-router.get('/:id', verifyToken, farmerController.find)
+router.get('/:id', [ verifyToken, isGuest ], farmerController.find)
 
-router.post('/', verifyToken, farmerController.add)
+router.post('/', [ verifyToken, isGuest ], farmerController.add)
 
-router.put('/:id', verifyToken, farmerController.update)
+router.put('/:id', [ verifyToken, isAdmin ], farmerController.update)
 
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', [ verifyToken, isAdmin ], async(req, res) => {
     //TO_DO
 })
 

@@ -1,12 +1,13 @@
 const db = require('../database/database');
 const UserModel = db.User;
+const RoleModel = db.Role;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-//const privateKey = fs.readFileSync("private.pem");
+const privateKey = fs.readFileSync("private.pem");
 
 exports.sigup = async (req, res) => {
-  const { username, email, password, role } = req.body;
+  const { username, email, password, RoleId } = req.body;
 
   const salt = await bcrypt.genSalt(10);
 
@@ -18,11 +19,17 @@ exports.sigup = async (req, res) => {
 
   if (existUser.length > 0) return res.status(400).json({message: "An user alredy exists with this email"});
 
+  const guestRole = await RoleModel.findAll({
+    where: {
+      name: 'Guest'
+    }
+  })
+
   const newUser = new UserModel({
     username,
     email,
     password: await bcrypt.hash(password, salt),
-    role : role ? role : 'Guest'
+    RoleId : RoleId ? RoleId : guestRole[0].id
   });
 
   await newUser.save();
