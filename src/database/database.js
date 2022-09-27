@@ -32,12 +32,13 @@ modelFarmer(sequelize);
 
 const {  User, Crop, Role, Farmer } = sequelize.models;
 User.hasMany(Crop);
-Crop.belongsTo(User);
 
 User.hasMany(Role);
-Role.belongsTo(User);
+User.belongsTo(Role);
 
 User.hasOne(Farmer)
+Farmer.belongsTo(User)
+Crop.belongsTo(Farmer)
 
 const test = async() => {
   try {

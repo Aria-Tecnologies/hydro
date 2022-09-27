@@ -14,6 +14,14 @@ module.exports = (sequelize) => {
       validate: {
         notNull: true, 
       }
+    },
+    isActive:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      validate:{
+        notNull: true
+      },
+      defaultValue: false
     }
   }, {timeStamps: false,
     createdAt: false,
